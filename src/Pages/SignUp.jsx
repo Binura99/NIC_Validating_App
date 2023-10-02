@@ -36,51 +36,53 @@ export const SignUp = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (
-      !regData.name ||
-      !regData.username ||
-      !regData.password ||
-      !regData.address ||
-      !regData.nic ||
-      !regData.Cpassword ||
-      !regData.number
-    ) {
-      setErrorMessage('Please fill in all fields');
-      return;
-    } else if (regData.password !== regData.Cpassword) {
-      setErrorMessage('Password do not match');
-      return;
-    } else if (regData.password === regData.Cpassword) {
-      account();
-      // alert('Successfully Registered');
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-      setRegData({
-        name: '',
-        username: '',
-        address: '',
-        nic: '',
-        number: '',
-        password: '',
-        Cpassword: '',
-      });
+  // Regular expressions for Sri Lankan NIC (old and new formats) and mobile numbers
+  const nicRegex = /^(1|2)\d{8}[VvXx]|^\d{9}$/; // Old and new NIC formats
+  const mobileRegex = /^(0)(7[1256])[0-9]{7}$/; // Sri Lankan mobile number format
 
-      setErrorMessage("");
-      return;
-    }
+  let errorMessage = '';
 
-  };
+  if (!regData.name || !regData.username || !regData.password || !regData.address || !regData.nic || !regData.Cpassword || !regData.number) {
+    errorMessage = 'Please fill in all fields';
+  } else if (regData.password !== regData.Cpassword) {
+    errorMessage = 'Password does not match';
+  } else if (!nicRegex.test(regData.nic)) {
+    errorMessage = 'Invalid NIC number';
+  } else if (!mobileRegex.test(regData.number)) {
+    errorMessage = 'Invalid mobile number';
+  }
+
+  if (errorMessage) {
+    setErrorMessage(errorMessage);
+  } else {
+    // All validations passed, you can proceed with the account creation
+    account();
+    setRegData({
+      name: '',
+      username: '',
+      address: '',
+      nic: '',
+      number: '',
+      password: '',
+      Cpassword: '',
+    });
+    setErrorMessage('');
+  }
+};
+
 
   return (
-    <div className="flex flex-col w-full h-screen bg-purple-100 relative justify-center items-center">
+    <div className="flex flex-col w-full h-full bg-purple-100 relative justify-center items-center">
       <div className="flex flex-col h-fit justify-center items-center">
-        <h1 className="font-semibold text-5xl my-5">
+
+        <form onSubmit={handleSubmit} className="sm:w-1/2 w-3/4 justify-center items-center my-4 bg-white shadow-lg rounded-lg p-3">
+        <h1 className="font-semibold text-5xl my-5 text-center">
           Sign<span className="text-purple-600">Up</span>
         </h1>
-
-        <form onSubmit={handleSubmit} className="sm:w-1/2 w-3/4">
-
+        <div>
           <label htmlFor="Name">Name</label>
           <input
             type="text"
@@ -156,6 +158,7 @@ export const SignUp = () => {
           >
             Create Account
           </button>
+          </div>
         </form>
       </div>
     </div>

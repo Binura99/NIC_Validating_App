@@ -9,12 +9,24 @@ export const MobilePage = () => {
     if (/^07[078]\d{7}$/.test(mobileNumber)) {
       if (mobileNumber.startsWith('070')) {
         setProvider('Mobitel');
-      } else if (mobileNumber.startsWith('077')) {
+      } else if (mobileNumber.startsWith('071')) {
+        setProvider('Mobitel');
+      } else if (mobileNumber.startsWith('072')) {
+        setProvider('Hutch');
+      } else if(mobileNumber.startsWith('073')){
         setProvider('Dialog');
-      } else if (mobileNumber.startsWith('078')) {
+      } else if(mobileNumber.startsWith('074')){
+        setProvider('Dialog');
+      } else if(mobileNumber.startsWith('075')){
+        setProvider('Airtel');
+      } else if(mobileNumber.startsWith('076')){
+        setProvider('Dialog');
+      } else if(mobileNumber.startsWith('077')){
+        setProvider('Dialog');
+      } else if(mobileNumber.startsWith('078')){
         setProvider('Hutch');
       }
-    }
+  }
   };
 
   const handleSubmit = (e) => {

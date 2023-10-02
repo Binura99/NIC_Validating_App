@@ -4,9 +4,18 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import Profile from '../profile.png'
 import M_users from '../management.png'
+import { LoginPage } from '../Pages/LoginPage';
+
+const token = localStorage.getItem('accessToken')
 
 export const Home = () => {
   return (
+
+    <>
+
+    {token ? (
+
+      
     <div className='w-full fixed mt-[-70px] justify-center h-screen flex flex-col items-center bg-slate-200'>
 
         <div className='flex flex-col gap-10 sm:flex-row'>
@@ -25,5 +34,14 @@ export const Home = () => {
         </div>
       
     </div>
+    
+
+) : (
+
+  <LoginPage/>
+
+)}
+
+</>
   )
 };

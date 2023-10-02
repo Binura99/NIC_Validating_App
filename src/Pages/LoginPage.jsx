@@ -35,7 +35,7 @@ export const LoginPage = () => {
 
   return (
     <div>
-        <div className='w-full h-screen flex items-center justify-center fixed'>
+        <div className='w-full h-screen mt-[-70px] flex items-center justify-center fixed'>
 
             <div className='relative z-0 w-1/2 h-screen bg-fixed hidden sm:flex flex-col justify-center'>
                 <img src={loginA} alt="login" className='object-cover h-full w-full' />
