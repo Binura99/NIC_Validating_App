@@ -85,7 +85,7 @@ export const LoginPage = () => {
 
                 <div className='w-full flex items-center justify-between'>
                     <div className='w-full flex'>
-                        <p className='text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2'>Forget Password?</p>
+                        <Link to='/forgotPassword'><p className='text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2'>Forget Password?</p></Link>
                     </div>
                 </div>
 

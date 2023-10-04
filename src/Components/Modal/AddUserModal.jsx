@@ -36,37 +36,41 @@ export const AddUserModal = ({onClose,isOpen}) => {
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      if (
-        !regData.name ||
-        !regData.username ||
-        !regData.password ||
-        !regData.address ||
-        !regData.nic ||
-        !regData.Cpassword ||
-        !regData.number
-      ) {
-        setErrorMessage('Please fill in all fields');
-        return;
-      } else if (regData.password !== regData.Cpassword) {
-        setErrorMessage('Password do not match');
-        return;
-      } else if (regData.password === regData.Cpassword) {
-        account();
-        // alert('Successfully Registered');
+      
+    // Regular expressions for Sri Lankan NIC (old and new formats) and mobile numbers
+    const nicRegex = /^([0-9]{9}[VvXx]|[0-9]{12})$/; // Old and new NIC formats
+    const mobileRegex = /^(0)(7[0-9])[0-9]{7}$/; // Sri Lankan mobile number format
+      
+    let errorMessage = '';
+      
+    if (!regData.name || !regData.username || !regData.password || !regData.address || !regData.nic || !regData.Cpassword || !regData.number) {
+      errorMessage = 'Please fill in all fields';
+    } else if (regData.password !== regData.Cpassword) {
+      errorMessage = 'Password does not match';
+    } else if (!(nicRegex.test(regData.nic) || (regData.nic.length === 12 && regData.nic.match(/^\d{9}$/)))) {
+      errorMessage = 'Invalid NIC number';
+    } else if (!mobileRegex.test(regData.number) && regData.number.length > 10) {
+      errorMessage = 'Invalid mobile number';
+    } else if (regData.number.length !== 10 ) {
+      errorMessage = 'Mobile number must be 10 digits';
+    }
   
-        setRegData({
-          name: '',
-          username: '',
-          address: '',
-          nic: '',
-          number: '',
-          password: '',
-          Cpassword: '',
-        });
-  
-        setErrorMessage("");
-        return;
-      }
+    if (errorMessage) {
+      setErrorMessage(errorMessage);
+    } else {
+      // All validations passed, you can proceed with the account creation
+      account();
+      setRegData({
+        name: '',
+        username: '',
+        address: '',
+        nic: '',
+        number: '',
+        password: '',
+        Cpassword: '',
+      });
+      setErrorMessage('');
+    }
   
     };
 

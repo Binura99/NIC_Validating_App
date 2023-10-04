@@ -8,6 +8,8 @@ import { SignUp } from '../Pages/SignUp';
 import { Profile } from '../Pages/Profile';
 import { ManageUsers } from '../Pages/ManageUsers';
 import { Test } from '../Pages/Test';
+import { Analytics } from '../Pages/Analytics';
+import { ForgotPassword } from '../Pages/ForgotPassword';
 
 export const AppRouter = () => {
   return (
@@ -20,15 +22,17 @@ export const AppRouter = () => {
               <Route path='mobile' element={<MobilePage/>}/>
               <Route path='profile' element={<Profile/>}/>
               <Route path='manageUsers' element={<ManageUsers/>}/>
+              <Route path='analytics' element={<Analytics/>}/>
+              <Route path='forgotPassword' element={<ForgotPassword/>}/>
               
-            
-            </Route>
-
-            <Route path='/'>
             <Route path='login' element={<LoginPage/>}/>
             <Route path='signup' element={<SignUp/>}/>
             <Route path='test' element={<Test/>}/>
+            
             </Route>
+
+            {/* <Route path='/'>
+            </Route> */}
         </Routes>
     </BrowserRouter>
   )

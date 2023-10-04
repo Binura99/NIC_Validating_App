@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Profile from '../profile.png'
 import M_users from '../management.png'
 import { LoginPage } from '../Pages/LoginPage';
+import Analytics from '../analytics.png'
 
 const token = localStorage.getItem('accessToken')
 
@@ -29,6 +30,12 @@ export const Home = () => {
               <Link to='/manageUsers'><span className='flex-col'>
               <img src={M_users} alt="Muser" className='justify-center mx-4 h-32' />
               <p className='font-semibold text-center text-xl'>Manage Users</p></span></Link>
+          </button>
+
+          <button className='items-center flex flex-col p-5 w-[200px] rounded-2xl transition-all duration-200 bg-white shadow-lg hover:bg-[#FFA1F5] cursor-pointer'>
+              <Link to='/analytics'><span className='flex-col'>
+              <img src={Analytics} alt="Muser" className='justify-center mx-4 h-32' />
+              <p className='font-semibold text-center text-xl'>Analytics</p></span></Link>
           </button>
 
         </div>

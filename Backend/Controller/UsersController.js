@@ -66,6 +66,29 @@ const editUser = async ( req, res ) => {
     res.json("Updated Account");
 }
 
+const getUsername = async ( req, res ) => {
+    
+    try {
+        const { username } = req.params; // Assuming you pass the username as a URL parameter
+    
+        // Find the user by username and retrieve the MobileNo field
+        const user = await Users.findOne({
+          where: { username },
+          attributes: ["number"],
+        });
+    
+        if (!user) {
+          return res.status(404).json({ error: "User not found" });
+        }
+    
+        // Return the user's mobile number
+        res.json({ number: user.number });
+      } catch (error) {
+        console.error("Error fetching mobile number by username:", error);
+        res.status(500).json({ error: "Failed to fetch mobile number" });
+      }
+}
+
 module.exports = {
     register,
     getUsers,
@@ -73,4 +96,5 @@ module.exports = {
     deleteUser,
     editUser,
     getUser,
+    getUsername,
 }

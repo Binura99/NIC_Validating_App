@@ -40,8 +40,8 @@ const handleSubmit = (e) => {
   e.preventDefault();
 
   // Regular expressions for Sri Lankan NIC (old and new formats) and mobile numbers
-  const nicRegex = /^(1|2)\d{8}[VvXx]|^\d{9}$/; // Old and new NIC formats
-  const mobileRegex = /^(0)(7[1256])[0-9]{7}$/; // Sri Lankan mobile number format
+  const nicRegex = /^([0-9]{9}[VvXx]|[0-9]{12})$/; // Old and new NIC formats
+  const mobileRegex = /^(0)(7[0-9])[0-9]{7}$/; // Sri Lankan mobile number format
 
   let errorMessage = '';
 
@@ -49,10 +49,12 @@ const handleSubmit = (e) => {
     errorMessage = 'Please fill in all fields';
   } else if (regData.password !== regData.Cpassword) {
     errorMessage = 'Password does not match';
-  } else if (!nicRegex.test(regData.nic)) {
+  } else if (!(nicRegex.test(regData.nic) || (regData.nic.length === 12 && regData.nic.match(/^\d{9}$/)))) {
     errorMessage = 'Invalid NIC number';
-  } else if (!mobileRegex.test(regData.number)) {
+  } else if (!mobileRegex.test(regData.number) && regData.number.length > 10) {
     errorMessage = 'Invalid mobile number';
+  } else if (regData.number.length !== 10 ) {
+    errorMessage = 'Mobile number must be 10 digits';
   }
 
   if (errorMessage) {

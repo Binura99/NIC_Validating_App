@@ -12,6 +12,7 @@ export const EditUserModal = ({ isOpen, onClose, userId }) => {
     number: '',
   });
   const [provider, setProvider] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [nicDetails, setNicDetails] = useState({
     dob: '', // Initialize with empty values
     gender: '',
@@ -30,6 +31,25 @@ export const EditUserModal = ({ isOpen, onClose, userId }) => {
   }, [userId]);
 
   const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const nicRegex = /^([0-9]{9}[VvXx]|[0-9]{12})$/; // Old and new NIC formats
+    const mobileRegex = /^(0)(7[0-9])[0-9]{7}$/; // Sri Lankan mobile number format
+
+    let errorMessage = '';
+
+    if (!userData.name || !userData.username || !userData.address || !userData.nic || !userData.number) {
+      errorMessage = 'Please fill in all fields';
+    }else if (!(nicRegex.test(userData.nic) || (userData.nic.length === 12 && userData.nic.match(/^\d{9}$/)))) {
+      errorMessage = 'Invalid NIC number';
+    } else if (!mobileRegex.test(userData.number) && userData.number.length > 10) {
+      errorMessage = 'Invalid mobile number';
+    }
+
+    if (errorMessage) {
+      setErrorMessage(errorMessage);
+    } else {
+
     axios
       .put(`http://localhost:3001/auth/update/${userId}`, userData)
       .then((response) => {
@@ -40,6 +60,9 @@ export const EditUserModal = ({ isOpen, onClose, userId }) => {
       .catch((error) => {
         console.error('Error updating', error);
       });
+
+    setErrorMessage('');
+  }
   };
 
 //   const handleNICChange = (e) => {
@@ -129,6 +152,11 @@ export const EditUserModal = ({ isOpen, onClose, userId }) => {
             className='w-full sm:w-[320px] text-black p-1 bg-[#f3f3f3] outline-violet-400 rounded-sm'
           />
         </div>
+
+        {errorMessage && (
+            <p className="text-red-500 mb-4">{errorMessage}</p>
+          )}
+
         <div className='flex flex-col sm:flex-row sm:gap-4 justify-center w-full'>
           <button
             className='sm:w-[100px] text-white font-medium my-2 bg-purple-600 rounded-lg p-1 text-center flex items-center justify-center transition-all duration-100 hover:bg-purple-500 cursor-pointer'
