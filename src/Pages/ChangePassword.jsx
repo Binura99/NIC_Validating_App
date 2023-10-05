@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-export const Test = () => {
+export const ChangePassword = () => {
   let navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [newData, setNewData] = useState({
@@ -49,7 +49,7 @@ export const Test = () => {
   return (
     <div className="w-full h-screen mt-[-70px] flex items-center justify-center bg-purple-100">
       <form
-        className="flex flex-col w-full sm:w-[376px] p-5 justify-center items-center bg-white rounded-xl shadow-xl"
+        className="flex flex-col w-full sm:w-[376px] p-5 justify-center items-center bg-white gap-3 rounded-xl shadow-xl"
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col mt-5">
@@ -70,7 +70,7 @@ export const Test = () => {
           />
         </div>
 
-        <div className="flex flex-col mt-4">
+        <div className="flex flex-col">
           <label
             htmlFor="nicnumber"
             className="text-base font-medium text-gray-900"
@@ -88,7 +88,7 @@ export const Test = () => {
           />
         </div>
 
-        {errorMessage && <p className="text-red-500 mt-2 ">{errorMessage}</p>}
+        {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
 
         <button
           className="sm:w-[100px] mt-2 text-white font-medium bg-purple-600 rounded-lg p-1 text-center flex items-center justify-center transition-all duration-100 hover:bg-purple-500 cursor-pointer"
