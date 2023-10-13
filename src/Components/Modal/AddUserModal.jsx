@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-
+import extractInfoFromNIC from '../Utils/NicUtils';
+import identifyProvider from '../Utils/ProviderUtils';
 
 export const AddUserModal = ({onClose,isOpen}) => {
 
@@ -14,6 +15,12 @@ export const AddUserModal = ({onClose,isOpen}) => {
       password: '',
       Cpassword: '',
     });
+    const [nicDetails, setNicDetails] = useState({
+      dob: '', // Initialize with empty values
+      gender: '',
+      age: '',
+    });
+    const [provider, setProvider] = useState('');
   
     const account = () => {
       const data = {
@@ -113,7 +120,12 @@ export const AddUserModal = ({onClose,isOpen}) => {
                 <input 
                 type="text"
                 value={regData.nic}
-                onChange={(e) => setRegData({ ...regData, nic: e.target.value })}
+                onChange={(e) => {
+                  const newNic = e.target.value;
+                  const newNicDetails = extractInfoFromNIC(newNic);
+                  setRegData({ ...regData, nic: newNic });
+                  setNicDetails(newNicDetails);
+                }}
                 placeholder='NIC'
                 className='w-full sm:w-[320px] text-black p-1 bg-[#f3f3f3] outline-violet-400 rounded-sm'
                 />
@@ -122,12 +134,14 @@ export const AddUserModal = ({onClose,isOpen}) => {
                 <input 
                 type="text"
                 id="age"
+                value={nicDetails.age}
                 placeholder='Age'
                 className='w-full sm:w-[320px] text-black p-1 bg-[#f3f3f3] outline-violet-400 rounded-sm'
                 />
                 <input 
                 type="text"
                 id="gender"
+                value={nicDetails.gender}
                 placeholder='Gender'
                 className='w-full sm:w-[320px] text-black p-1 bg-[#f3f3f3] outline-violet-400 rounded-sm'
                 />
@@ -136,13 +150,19 @@ export const AddUserModal = ({onClose,isOpen}) => {
                 <input 
                 type="number"
                 value={regData.number}
-                onChange={(e) => setRegData({ ...regData, number: e.target.value }) }
+                onChange={(e) => {
+                  const newNumber = e.target.value;
+                  const newProvider = identifyProvider(newNumber);
+                  setRegData({ ...regData, number: newNumber });
+                  setProvider(newProvider);
+                }}
                 placeholder='Mobile Number'
                 className='w-full sm:w-[320px] text-black p-1 bg-[#f3f3f3] outline-violet-400 rounded-sm'
                 />
                 <input 
                 type="text"
                 id="provider"
+                value={provider}
                 placeholder='Provider'
                 className='w-full sm:w-[320px] text-black p-1 bg-[#f3f3f3] outline-violet-400 rounded-sm'
                 />

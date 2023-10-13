@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from "axios";
 import { EditUserModal } from './Modal/EditUserModal';
 import { AddUserModal } from './Modal/AddUserModal';
+import { useReactToPrint } from "react-to-print";
 
 export const UsersTable = () => {
   const [listOfUsers, setListOfUsers] = useState([]);
@@ -10,6 +11,11 @@ export const UsersTable = () => {
   const [userId, setUserId] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [addModal, setAddModal] = useState(false);
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: "Analytics",
+  });
 
   const handleOpenModal = (id) => {
     setUserId(id);
@@ -88,7 +94,7 @@ export const UsersTable = () => {
                 </button>
             </div>
           </div>
-          <table className="min-w-full my-3 bg-white rounded">
+          <table className="min-w-full h-fit my-3 bg-white rounded" ref={componentRef}>
             <thead>
               <tr>
                 <th className="py-2 px-4 bg-gray-100 border-b">ID</th>
@@ -128,6 +134,10 @@ export const UsersTable = () => {
           </table>
         </div>
       </div>
+        <button onClick={handlePrint}
+        className='sm:w-[100px] mt-3 text-white font-medium bg-purple-600 rounded-lg p-1 text-center flex items-center justify-center transition-all duration-100 hover:bg-purple-500 cursor-pointer'>
+          Print
+        </button>
 
       <EditUserModal userId={userId} isOpen={showModal} onClose={handleCloseModal}/>
       <AddUserModal isOpen={addModal} onClose={handleCloseModal}/>

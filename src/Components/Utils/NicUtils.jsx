@@ -52,7 +52,7 @@ function extractInfoFromNIC(nic) {
       const birthYear = parseInt(nic.substring(0, 4));
       const days = parseInt(nic.substring(4, 7)) - 1;
       const genderChar = nic.charAt(11);
-      const gender = genderChar === 'V' ? 'Male' : 'Female';
+      const gender = genderChar === 'V' ? 'Female' : 'Male';
       const dob = new Date(birthYear, 0);
       dob.setDate(dob.getDate() + days);
       const age = year - birthYear;
@@ -72,6 +72,6 @@ function extractInfoFromNIC(nic) {
       };
     }
   }
-  
+  // 720133180v
   export default extractInfoFromNIC;
   
